@@ -48,7 +48,7 @@ def get_response(data, response_format):
 def root():
     return {"message": f"Welcome to {api_settings.TITLE}"}
 
-@app.get('/ciudad/{ciudad}/restaurante')
+@app.get('/ciudad/{ciudad}/restaurante', responses={200:{'description': 'OK', "content": {"application/xml": {}}}})
 def get_restaurantes(ciudad: str, Accept: str = Header(None)):
     restaurants = services.get_restaurants(ciudad)
         # print(restaurants)
@@ -58,7 +58,7 @@ def get_restaurantes(ciudad: str, Accept: str = Header(None)):
         }, status_code=404)
     return get_response(restaurants, Accept)
 
-@app.get('/ciudad/{ciudad}/clima/manhana')
+@app.get('/ciudad/{ciudad}/clima/manhana',responses={200:{'description': 'OK', "content": {"application/xml": {}}}})
 def get_clima_manhana(ciudad: str, Accept: str = Header(None)):
     clima = services.getHourlyWeather(ciudad)
     # print(restaurants)
@@ -68,7 +68,7 @@ def get_clima_manhana(ciudad: str, Accept: str = Header(None)):
         }, status_code=404)
     return get_response(clima, Accept)
 
-@app.get('/ciudad/{ciudad}/clima/7dias')
+@app.get('/ciudad/{ciudad}/clima/7dias',responses={200:{'description': 'OK', "content": {"application/xml": {}}}})
 def get_clima_7dias(ciudad: str, Accept: str = Header(None)):
     clima = services.getDailyWeather(ciudad)
     # print(restaurants)
