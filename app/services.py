@@ -76,6 +76,17 @@ def get_restaurants(ciudad: str):
     restaurants = getXMLRestaurantes(data)
     return restaurants
 
+
+def getDailyWeatherByDate(ciudad: str, date: str):
+    lat,long = getLatitudLongitud(ciudad)
+    #https://api.open-meteo.com/v1/forecast?latitude=-12.0432&longitude=-77.0282&daily=temperature_2m_max,temperature_2m_min&timezone=PST&start_date=2023-10-05&end_date=2023-10-05
+    URL = 'https://api.open-meteo.com/v1/forecast?latitude='+str(lat)+'&longitude='+str(long)+'&daily=temperature_2m_max,temperature_2m_min&timezone=PST&start_date='+date+'&end_date='+date
+    data = fetch_data(URL) #temperature_2m_max
+    temperature_max = data['daily']['temperature_2m_max'][0]
+    temperature_min = data['daily']['temperature_2m_min'][0]
+    return lat, long , temperature_max, temperature_min
+    
+
 def getDailyWeather(ciudad: str):
     lat,long = getLatitudLongitud(ciudad)
     #https://api.open-meteo.com/v1/forecast?latitude=-12.04&longitude=-77.03&forecast_days=2&daily=temperature_2m_max&timezone=PST
