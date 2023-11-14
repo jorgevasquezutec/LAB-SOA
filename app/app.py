@@ -156,6 +156,10 @@ def get_clima_7dias(ciudad: str, Accept: str = Header(None)):
         }, status_code=404)
     return get_response(clima, Accept)
 
+@app.get('/cities', responses={200: {'description': 'OK', "content": {"application/xml": {}}}})
+def get_cities_temp_date(temp: float, date: str, Accept: str = Header(None)):
+    cities = services.getCitiesByTempDate(temperature=temp, date=date)
+    return get_response(cities, Accept)
 
 def run():
     uvicorn.run(app,

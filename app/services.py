@@ -2,6 +2,7 @@
 import requests
 import xml.etree.ElementTree as ET
 from fastapi.exceptions import HTTPException
+from app.config.mongo import weather
 
 
 DELTA = 0.01
@@ -118,3 +119,22 @@ def getHourlyWeather(ciudad: str):
         obj[key] = data['hourly']['temperature_2m'][i]
         result.append(obj)
     return result
+
+######################################################
+########### SHARDED MONGODB SERVICES##################
+######################################################
+
+def getCitiesByTempDate(temperature: float, date: str)->list[dict]:
+    # Realiza la consulta a MongoDB
+    query = {
+        'fecha': date,
+        'temperatura máxima': {'$gte': temperature, '$lt': temperature + 1.0}
+    }
+
+    result = list(weather.find(query))
+    # devolver solo el 'nombre de ciudad' de cada documento en el resultado
+    cities = []
+    for doc in result:
+        cities.append(doc['nombre de ciudad'])
+    return cities
+    

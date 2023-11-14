@@ -8,6 +8,10 @@ class Settings(BaseSettings):
     PORT: int
     TITLE: str
     PREFIX: str
+    MONGO_URI: str
+    MONGO_DATABASE: str
+    MONGO_LOG_COLLECION: str
+    MONGO_WEATHER_COLLECTION: str
 
 
 
