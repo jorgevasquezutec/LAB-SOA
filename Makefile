@@ -13,4 +13,15 @@ run:
 
 watch:
 	uvicorn app.app:app --reload
-	
+
+compose-up-files:
+	docker compose -f ./app/mongodb/configs/docker-compose.yml up -d --build
+	docker compose -f ./app/mongodb/shard1/docker-compose.yml up -d --build
+	docker compose -f ./app/mongodb/shard2/docker-compose.yml up -d --build
+	docker compose -f ./app/mongodb/docker-compose.yml up -d --build
+
+compose-down-files:
+	docker compose -f ./app/mongodb/configs/docker-compose.yml down
+	docker compose -f ./app/mongodb/shard1/docker-compose.yml down
+	docker compose -f ./app/mongodb/shard2/docker-compose.yml down
+	docker compose -f ./app/mongodb/docker-compose.yml down
