@@ -14,6 +14,7 @@ from strawberry.asgi import GraphQL
 import strawberry
 
 
+
 @strawberry.type
 class Weather:
     city: str
@@ -78,7 +79,6 @@ class Query:
 
 
 schema = strawberry.Schema(query=Query)
-
 
 graphql_app = GraphQL(schema)
 
@@ -158,6 +158,7 @@ def get_clima_7dias(ciudad: str, Accept: str = Header(None)):
 
 
 def run():
+    #initialize unleash client
     uvicorn.run(app,
                 host=api_settings.HOST,
                 port=api_settings.PORT,

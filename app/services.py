@@ -2,7 +2,13 @@
 import requests
 import xml.etree.ElementTree as ET
 from fastapi.exceptions import HTTPException
+from app.config.unleash import unleash_client
+apis = {
+    "geo": "https://geocoding-api.open-meteo.com/v1/search?name={}",
+    "nomi": "https://nominatim.openstreetmap.org/search?q={}&format=json",
+}
 
+app_context = {"user_id": "prueba@email.com"}
 
 DELTA = 0.01
 
@@ -26,15 +32,24 @@ def create_bounding_box(latitude, longitude, delta):
     return (upper_left_lat, upper_left_lon, lower_right_lat, lower_right_lon)
 
 
+
 def getLatitudLongitud(ciudad):
     ciudad = ciudad.lower()
-    URL = 'https://nominatim.openstreetmap.org/search?q='+ciudad+'&format=json'
+    geocoding = unleash_client.is_enabled("geocoding", context=app_context)
+    currentApi = apis["geo"] if geocoding else apis["nomi"]
+    URL = currentApi.format(ciudad)
+    print(URL)
     data = fetch_data(URL)
-    print(len(data))
+    # print(len(data))
     if(len(data) == 0):
         print("no se encontro")
         raise HTTPException(status_code=404,detail="No se encontro la ciudad")
-    print("paso")
+    if(geocoding):
+        lat = data['results'][0]['latitude']
+        lat = float(lat)
+        lon = data['results'][0]['longitude']
+        lon = float(lon)
+        return lat, lon
     lat = data[0]['lat']
     lat = float(lat)
     lon = data[0]['lon']

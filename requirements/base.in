@@ -5,3 +5,4 @@ ipykernel
 pydantic_settings
 requests
 strawberry-graphql[debug-server]
+UnleashClient

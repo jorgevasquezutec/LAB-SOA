@@ -8,6 +8,9 @@ class Settings(BaseSettings):
     PORT: int
     TITLE: str
     PREFIX: str
+    UNLEASH_URL: str
+    UNLEASH_TOKEN: str
+    ENV: str
 
 
 
