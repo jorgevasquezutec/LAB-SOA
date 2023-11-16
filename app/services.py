@@ -122,9 +122,9 @@ def getHourlyWeather(ciudad: str):
     # print(lat,long)
     #https://api.open-meteo.com/v1/forecast?latitude=-12.04&longitude=-77.03&forecast_days=2&hourly=temperature_2m&timezone=PST
     URL = 'https://api.open-meteo.com/v1/forecast?latitude='+str(lat)+'&longitude='+str(long)+'&forecast_days=2&hourly=temperature_2m&timezone=PST'
-    print(URL)
+    # print(URL)
     data = fetch_data(URL)#temperature_2m
-    print(data)
+    # print(data)
     # pair up (time,temperature_2m)
     result = []
     for i in range(len(data['hourly']['temperature_2m'])):
